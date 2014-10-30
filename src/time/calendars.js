@@ -1,9 +1,4 @@
-(function (global, phi) {
-    var loaded = false;
-
-    (function () {
-        if (loaded === false) {
-
+(function () {
             var calendars = {
                 _default: {
                     isHoliday: function (date) {
@@ -19,8 +14,5 @@
                 }
             };
             phi.calendars = calendars;
-            loaded = true;
-        }
-    } ());
 
-} (this, phi)); 
+} ());
