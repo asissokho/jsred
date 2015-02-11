@@ -3,9 +3,10 @@
 
     (function () {
         if (loaded === false) {
-            var defaultOptions = {
+            var defaultOptions =  {
                 discountingMethod : 'fixedThenCompounded',
-                calendar : ''
+                calendar : 'Target',
+		oneMoreOption : 'one more option'
             };
             phi.defaultOptions = defaultOptions;
             loaded = true;

@@ -9,6 +9,8 @@
 		        _i,
 		        _len;
 
+	    // je ne sais pas encore ce que nous devons faire contre toutes ces conneries
+
             InterestRatePricer.prototype.price = function (instrument, date) {
                 ///	<summary>
                 ///		1: price(instrument) - This function accepts an instrument which can be priced
@@ -24,6 +26,8 @@
                 }
                 return npv;
             };
+	    
+	    // Merci de ne pas venir nous empecher de travailler
 
             InterestRatePricer.prototype.discount = function (referenceDate, amount, paymentDate) {
                 var yearFraction = time.yearFraction(referenceDate, paymentDate);
