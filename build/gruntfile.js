@@ -1,7 +1,7 @@
 module.exports = function (grunt){
 
 	grunt.initConfig({
-		pkg : grunt.file.readJSON(),
+		pkg : grunt.file.readJSON('package.json'),
 
 		karma: {
 			unit: {
@@ -11,5 +11,5 @@ module.exports = function (grunt){
 	});
 
 	grunt.loadNpmTasks('grunt-karma')
-	grunt.registerTask('defaut', ['karma']);
-}
+	grunt.registerTask('default', ['karma']);
+};
