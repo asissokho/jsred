@@ -21,6 +21,7 @@
         ok((global.phi.getFirstOrDefault(global.phi.calendars)).name === "_default", "OK : phi.getFirstOrDefault");
     });
 
+	// comment this out!
     test("rateCurve", function () {
         ok((global.phi.rateCurve().discountFactor() === 1), "OK : global.phi.rateCurve.discountFactor()=== 1");
 
