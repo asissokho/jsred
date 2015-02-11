@@ -1,11 +1,14 @@
-(function (global, phi) {
-    "use strict";
+"use strict";
 
-    var getFirstOrDefault = global.phi.getFirstOrDefault,
-        discoutingMethods = global.phi.discountingMethods,
-        daycounters = global.phi.dayCounters,
-        extend = global.phi.extend,
-        sum = global.phi.sum,
+(function (){
+
+
+    var getFirstOrDefault = {},
+        discountingMethods = {},
+        daycounters = {},
+        extend = {},
+        sum = {},
+
         _defaults = {
             discountingMethod: "fixedThenCompounded",
             frequency: "annual"
@@ -43,5 +46,4 @@
 
     };
 
-    global.phi.rate = _rate;
-})(); 
+})();

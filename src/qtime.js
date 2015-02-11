@@ -1,5 +1,4 @@
-﻿(function (global, phi) {
-    "use strict";
+﻿    "use strict";
     var times = (function () {
 
         /* Definition of the module and its dependencies 
@@ -16,10 +15,14 @@
             dateAdjustmentConvention: 'modifiedFollowing'
         },
 
-        dateAdjustmentMethods = global.times.dateAdjustmentMethods,
-        dayCounters = global.times.dayCounters,
-        yearFractionMethods = global.times.yearFractionMethods;
+        dateAdjustmentMethods = {},
+        dayCounters = {},
+        yearFractionMethods = {};
 
+
+        function dayCount(){
+            
+        }
 
 
         function yearFraction(startDate, endDate, daycountMethod) {
@@ -78,5 +81,6 @@
 
 
     })();
-    phi.times = times;
-})(this);
+
+
+

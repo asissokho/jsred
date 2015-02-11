@@ -2,7 +2,7 @@
 
     /* Requires phi.dateArithmetics */
     /* Handles only dates, no value or paid amout i*/
-    var advance = global.phi.timeroutines.dateArithmetics.advance,
+    var advance = function f(){}, //global.phi.timeroutines.dateArithmetics.advance,
     Schedule = function (startDate, endDate, periodicity, options) {
 
         if (!(this instanceof Schedule)) {

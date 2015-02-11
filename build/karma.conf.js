@@ -3,13 +3,13 @@ module.exports = function (config){
     config.set({
 
 	// base path that will be used to resolve files and exclude
-	basePath : '',
+	basePath : '../src/',
 	
 	//frameworks to use
 	frameworks: ['jasmine'],
 
 	// list of files and patterns to load in the browser
-	files : [ 'counter.js','counter-specs.js'],
+	files : [ '**/*.js'],
 
 	//list of files to exclude
 	exclude: [],

@@ -43,12 +43,3 @@
     global.phi.engines = engines;
 })(this);
 
-function RateCurveEngine(instrument) {
-    
-    function Error(instrument) {return function (val){this.rateCurve.updateNode(instrument.latestDate,val); return this.NPV(instrument)- instrument.quote());} 
-}
-
-// for (i in instruments)
-    var val = solvers.solve(RateCurveEngine.Error(instrument));
-    if (isNaN(val))
-        throw;
