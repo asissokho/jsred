@@ -42,9 +42,10 @@ var optimisers = (function(){
 					
 					_iter = _iter+1;
 				}
-				return { res : NaN,
-						 numberOfIterations : _iter
-					   };
+				return {
+				         res : NaN,
+					 numberOfIterations : _iter
+				       };
 	};
 
 	_secant = function (fn, fnprim, target, lower, upper){
@@ -59,13 +60,13 @@ var optimisers = (function(){
 var optimiser = optimisers.dichotomy;
 
 	console.log(new Date());
-	var solution = optimiser(function(x){
-									return x*x*x - 1;
-							},
-							0,
-							-50, 
-							10
-							);
+	var solution = optimiser(function(x) {	return x*x*x - 1;}, // the function is xˆ3-1
+			          0,
+				  -50, 
+				  10
+				);
 console.log(solution.res);
 console.log(solution.numberOfIterations);
-console.log(new Date());
+jonsole.log(new Date());
+
+// je ne sais pas ce que nous devons faire avec toutes ces conneries...

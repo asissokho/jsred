@@ -21,15 +21,17 @@
         ok((global.phi.getFirstOrDefault(global.phi.calendars)).name === "_default", "OK : phi.getFirstOrDefault");
     });
 
-	// comment this out!
-    test("rateCurve", function () {
+set number
+execute pathogen#infect()
+syntax on
+filetype plugin indent on    test("rateCurve", function () {
         ok((global.phi.rateCurve().discountFactor() === 1), "OK : global.phi.rateCurve.discountFactor()=== 1");
 
         ok((function () {
             var curve = global.phi.rateCurve(new Date(), { rate: 0.05 });
             if (curve.discountFactor() === 1) {
                 console.log("c'est ok");
-                console.log(JSON.stringify(curve));
+                console.log(JSON.stringify(curve)); 
                 return true;
             } else {
                 return false;
@@ -45,6 +47,6 @@
 		ok (d1(2)===6, "linear interpolation test 1 : OK");
 		console.log(d2(new Date(2012, 1, 1)));
 	});
- 
 
 } (this));
+

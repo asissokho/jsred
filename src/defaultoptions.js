@@ -1,8 +1,7 @@
 ﻿(function (global, phi) {
     var loaded = false;
-
     (function () {
-        if (loaded === false) {
+	    if (loaded === false) {
             var defaultOptions =  {
                 discountingMethod : 'fixedThenCompounded',
                 calendar : 'Target',
@@ -10,7 +9,7 @@
             };
             phi.defaultOptions = defaultOptions;
             loaded = true;
+
         }
     } ());
-
 } (this, phi));

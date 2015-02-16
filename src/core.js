@@ -1,9 +1,7 @@
 ﻿(function (global) {
-
     "use strict";
-    var phi;
 
-    phi = function phi(fn) {
+   var  phi = function phi(fn) {
         return new phi.fn.init(fn);
     };
 
@@ -13,6 +11,7 @@
                 fn();
             }
         },
+
         getFirstOrDefault: function (obj, prop) {
             if (!(prop)) {
                 return obj['_default'];
@@ -22,11 +21,9 @@
                     return obj[prop] || obj['_default'];
                 }
                 else {
-                    /*if the property is not undefined and not of type string the we return it back */
                     return prop;
                 }
             }
-
         },
 
         map: function (arrayLike, f) {

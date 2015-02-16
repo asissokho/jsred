@@ -13,14 +13,14 @@ module.exports = function (config){
 
 	//list of files to exclude
 	exclude: [],
- 	
+
 	// test results reporter use
 	reporters : ['progress'],
 
 	// web port server
 	port : 1338,
 
-	// enable colors in the output (reporters and log)
+	// enable colors in the output   and log)
 	colors: true,
 	
 	logLevel : config.LOG_INFO,
