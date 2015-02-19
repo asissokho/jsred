@@ -21,7 +21,7 @@
                     return obj[prop] || obj['_default'];
                 }
                 else {
-                    return prop;
+                   return prop;
                 }
             }
         },
@@ -48,7 +48,7 @@
                 }
             }
             return target;
-        },
+      },
         constructor: phi
     };
 

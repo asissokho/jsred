@@ -1,6 +1,5 @@
 ﻿(function (global, undefined) {
     var instruments = (function () {
-
         var _simpleCashflowList = {
             cashflows: function () {
                 return [    { amount: 5, paymentDate: new Date(2012, 01, 01) },
@@ -16,5 +15,4 @@
 
     global.instruments = instruments;
 } (this));
-
 
