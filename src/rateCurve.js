@@ -15,3 +15,6 @@ var rateCurve = (function (){
 
 	return rateCurve;
 }());
+
+
+

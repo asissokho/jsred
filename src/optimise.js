@@ -2,11 +2,8 @@ var optimisers = (function(){
 	var _dichotomy,
 		_secant,
         _isNegligible,
-		_options = {
-		maxIterations : 1000,
-		precision : 0.0001
-		};
-    
+		_options = { maxIterations : 1000,	precision : 0.0001	};
+
     isNegligible = function(x){
         return Math.abs(x)<_options.precision;
     }
@@ -16,7 +13,6 @@ var optimisers = (function(){
         if(!isNegligible(target)){
             return (dichotomy(function(x){ return  fn(x)-target;},0. , lower, upper));
         }
-
     	var _low = lower,
 			_up  = upper,
 			_mid,
@@ -25,8 +21,7 @@ var optimisers = (function(){
 			_fmid,
 			_iter = -1;
 					
-					
-			/* sanity checks*/
+		/* sanity checks*/
     	_flow = fn(_low);
     	_fup = fn(_up);	
     	if(_flow * _fup > 0) {
@@ -53,11 +48,10 @@ var optimisers = (function(){
     };
 
    	_secant = function (fn, fnprim, target, lower, upper){
-    	};
+
+   	};
 	
-	return {
-		secant : _secant,
-		dichotomy : _dichotomy
-	};
+	return { secant : _secant,		dichotomy : _dichotomy	};
+
 })();
 

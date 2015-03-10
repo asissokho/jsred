@@ -6,31 +6,30 @@
         interpolationMethod: null,
         rates: null
     },
-        getFirstOrDefault = global.phi.getFirstOrDefault,
-        discoutingMethods = global.phi.discountingMethods,
-        extend = global.phi.extend,
-        discountFactorFor = function (referenceDate, options) {
-            // should provide the correct function for discounting 
-            // given the value
-            return (function (paymentDate) {
-                return 1; // Math.exp(-options.rate * yearFraction(referenceDate, paymentDate));
-            });
-        },
-       rateCurve_ = (function () {
-           return (function rateCurve(referenceDate, options) {
-               if (!(this instanceof rateCurve)) {
-                   return new rateCurve(referenceDate, options);
-               } else {
-                   this.referenceDate = referenceDate;
-                   this.options = extend(extend({}, _options), options);
-                   this.discountFactor = discountFactorFor(referenceDate, this.options);
-                   // for bootstrapping
-                   this.updateNode = function (index, val) {
-                   }
-               }
-           });
-       } ());
-
+    getFirstOrDefault = global.phi.getFirstOrDefault ,     
+    discoutingMethods = global.phi.discountingMethods,
+    extend = global.phi.extend,
+    discountFactorFor = function (referenceDate, options) {
+    // should provide the correct function for discounting 
+    // given the value
+    return (function (paymentDate) {
+           return 1; // Math.exp(-options.rate * yearFraction(referenceDate, paymentDate));
+        });
+    },
+    rateCurve_ = (function () {
+    return (function rateCurve(referenceDate, options) {
+         if (!(this instanceof rateCurve)) {
+               return new rateCurve(referenceDate, options);
+           } else {
+              this.referenceDate = referenceDate;
+              this.options = extend(extend({}, _options), options);
+              this.discountFactor = discountFactorFor(referenceDate, this.options);
+             // for bootstrapping
+              this.updateNode = function (index, val) {
+           }
+     }
+     });
+  } ());
 
 
     simpleRateCurve = function simpleRateCurve(referenceDate, rate) {
@@ -117,5 +116,25 @@ floatingRateBond: bond({schedule: schedule, floatingRate : {index: name, spread:
 stepupCouponBond : bond({schedules : , rates : }
 
 Il faut prendre le fichier cashflows.cpp pour voir comment ca marche.
+
+var discountingEngine = discountingEngine(rateCurve)
+var pricingResult = discountingEngine.priceBond(bond);
+
+pricingResult.price(), pricingResult.duration, pricingResult.convexity()
+discountingEngine.compute('riskAnalytics', bond,price);
+discountingEngine.compute('pricingAnalytics', bond, price);
+
+
+
+var grid = grid();
+grid.preparevalue();
+
+grid.sendCalcultations(listOfCalculations, function(res){
+    console.log(JSON.toString(res));
+});
+
+
+// Peut se faire avec l'utilisation de nodejs et de async ou alors step....
+
 
 **/

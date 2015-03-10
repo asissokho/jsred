@@ -19,6 +19,39 @@ describe ("basic requirements for instruments", function (){
 
 });
 
+describe("mapping at reducing functions", function (){
+    
+    var times3 = function (x){
+        return x*3;
+    };
+
+    it("1 + 2 + 3 = 6", function(){
+        var res = phi.sum([1,2,3], phi.identity),
+            expected = 6;
+        console.log(res);
+        expect(res).toBe(expected);
+    });
+
+    it("1*3 + 2*3 + 3*3 = 6", function(){
+        var res = phi.sum([1,2,3], times3),
+            expected = 18;
+        expect(res).toBe(expected);
+    });
+
+     it("multiplying the first 4 natural numbers yields to 24", function(){
+        var res = phi.mapReduce(phi.identity, phi.multiply, [1,2,3,4], 1),
+            expected = 24;
+        expect(res).toBe(expected);
+    });
+
+     it("converting to mapReduce function", function(){
+        var res = phi.mapReduce(phi.identity, phi.plus, [1,2,3],0 ),
+            res2 = phi.sum([1,2,3], phi.identity);
+        expect(res).toBe(res2);
+
+     });
+
+});
 
 describe ("basic requirements for optimizers", function (){
 
@@ -40,7 +73,6 @@ describe ("basic requirements for optimizers", function (){
 	});
 
     it("using optimisers to get a target value", function (){
-
         var optimise = optimisers.dichotomy,
             cubic = function(x) { return x*x*x - 1;},
             expected = 2,

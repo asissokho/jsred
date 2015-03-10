@@ -1,12 +1,9 @@
 ﻿(function (global, phi) {
-    var loaded = false,
-        calendars = global.phi.calendars,
+        var calendars = global.phi.calendars,
         getFirstOrDefault = phi.getFirstOrDefault;
 
     (function () {
-        if (loaded === false) {
-
-            following = function modifiedFollowing(date, calendar) {
+            var following = function modifiedFollowing(date, calendar) {
                 calendar = getFirstOrDefault(calendars, calendar);
                 while (calendar.isHoliday(date)) {
                     date = advance(date, "1d");
@@ -42,7 +39,6 @@
                     return date;
                 }
 
-
             },
             preceeding = function preceeding(date, calendar) {
                 calendar = phi.getFirstOrDefault(calendars, calendar);
@@ -50,9 +46,8 @@
                     date = advance(date, "-1d");
                 }
                 return date;
-
-
             },
+
             unadjusted = function unadjusted(date, calendar) {
                 return date;
             },
@@ -92,12 +87,6 @@
                     modifiedPreceeding: modifiedPreceeding,
                     _default: unadjusted
                 },
-                dayCounters: {
-                    'act/act': null,
-                    'act/365': null,
-                    '30/360': null,
-                    '_default': null
-                },
 
                 dateArithmetics: {
                     advance: advance,
@@ -107,8 +96,6 @@
             };
             phi.timeroutines = timeroutines;
             phi.fn.timeroutines = timeroutines;
-            loaded = true;
-        }
     } ());
 
 } (this, phi));

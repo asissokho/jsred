@@ -27,12 +27,47 @@
         },
 
         map: function (arrayLike, f) {
+            var i=0,
+                n=arrayLike.length,
+                mappedArray = new Array[n];
+            for(;i<n;i++){
+                mappedArray[i] = f(arrayLike[i]);
+            }
         },
 
-        sum: function (arrayLike) {
-
+        plus: function (x, y){
+            return x+y;
         },
 
+        multiply: function (x,y){
+            return x*y;
+        },
+
+        sum: function (arrayLike, f) {
+            var i=0,
+                s=0,
+                n=arrayLike.length;
+            for(;i<n;i++){
+                s+=f(arrayLike[i]);
+            }
+            return s;
+        },
+
+       identity: function (x){
+           return x;
+       },
+
+        mapReduce: function(map, reduce, arrayLike, reduceInvariant){
+            var i = 0,
+                reducedValue = reduceInvariant,
+                n = arrayLike.length;
+            for(;i<n;i++){
+                reducedValue = reduce(reducedValue, map(arrayLike[i]));
+            }
+
+            return reducedValue;
+        },
+            
         isArray: Array.isArray || function (arg) {
             return Object.prototype.toString.call(arg) === "[object Array]";
         },
@@ -58,3 +93,4 @@
 
     global.phi = phi;
 } (this));
+

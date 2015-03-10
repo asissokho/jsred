@@ -5,7 +5,7 @@
             var defaultOptions =  {
                 discountingMethod : 'fixedThenCompounded',
                 calendar : 'Target',
-		oneMoreOption : 'one more option'
+        		oneMoreOption : 'one more option'
             };
             phi.defaultOptions = defaultOptions;
             loaded = true;

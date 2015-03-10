@@ -1,6 +1,17 @@
 (function (global) {
-    var loaded = false,
-        January = 0,
+                
+        var January = 0,
+        February=1,
+        March=2,
+        April=3,
+        May=4,
+        June = 5,
+        July= 6,
+        August = 7,
+        September =8,
+        October = 9,
+        November=10,
+        December= 11,
         dayLengthInMilliseconds = 86400000,
         monthLength = [],
         leapYearMonthLength = [],
@@ -31,8 +42,14 @@
              return 360 * (yy2 - yy1) + 30 * (mm2 - mm1 - 1) + Math.max(0, 30 - dd1) + Math.min(30, dd2);
          };
 
+        (function (){
+            Date.prototype.dayOfYear = function (){
+                var januaryFirst = new Date(this.getFullYear(), January, 1);
+                return Math.ceil((this - januaryFirst)/dayLengthInMilliseconds) + 1;
+            };
+        }());
+
     (function () {
-        if (loaded === false) {
 
             var actualactualISDA = function actualactualISDA(dateA, dateB) {
                 var y1 = dateA.getFullYear(),
@@ -63,8 +80,6 @@
                     return dayCount(dateA, dateB) / denominator;
                 }
             };
-        }
-        loaded == true;
         global.phi.daycounters = daycounters;
         global.phi.fn.daycounters = daycounters;
     } ());

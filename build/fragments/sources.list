@@ -1,0 +1,15 @@
+#head wapper
+./fragments/extern-pre.js
+./fragments/amd-pre.js
+#list core components files
+../src/core.js
+../src/maths/interpolator.js
+# time manipulation routines
+../src/time/timecore.js
+../src/time/timeroutines.js
+../src/time/calendars.js
+../src/time/daycounters.js
+../src/time/schedule.js
+# tail wapper
+./fragments/amd-post.js
+./fragments/extern-post.js
