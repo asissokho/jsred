@@ -19,7 +19,6 @@
         discountFactor: function (d){
             var time = this.dayCounter().yearFraction(valueDate(),d);
             return Math.exp(-1*r*t);
-
         },
         valueDate: function(){
         },
