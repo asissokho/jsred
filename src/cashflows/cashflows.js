@@ -1,7 +1,9 @@
-(function(){
-
+(function(global){
+    
+    console.log('loading cashflows');
+     
     function cashflows(){
-        return new cashflow.fn.init();
+        return new cashflows.fn.init();
         
     };
 
@@ -63,30 +65,10 @@
 
     };
 
+    global.phi= global.phi || {};
 
-    // I want people to be able to do something like this 
-    // cashflows('price', bond) doit etre la meme chose que cashflows.price(bond);
-    // bond().evaluationDate(date).shedule(start,.........).price(yc,evaluationdate).results;
-    // bond(....).price(yieldcuve, evaluationDate);
-    // bond(....).analytics({dirtyPrice: .34})
-    // bond.cashflows() doit etre la meme chose que bond('cashflows')
-    // bond.cashflows(something) doit etre   la meme chose que bond('cashflows', something)
-    //
-    //  bond = function (){
-    //      return  new bond.fn();
-    //  };
-    //  
-    //  bond.fn{
-    //      init : function (){},
-    //      price : function (){},
-    //      issueDate: function(){},
-    //      schedule : function(){},
-    //      coupon : function(){},
-    //      results : function(){}
-    //      
-    //  }
-    //
-    // cf.price = function (bond){return 2;}
-    // et que ce truc soit pris en compte
+    global.phi.cashflows = cashflows;
 
-}());
+    console.log(global.phi);
+
+}(this));

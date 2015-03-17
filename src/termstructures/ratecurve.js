@@ -1,33 +1,16 @@
-(function (){
-    // the main objective of rateCurves is to provide discount factors for a given date
-    var simpleContinuousRateCurve(){
-        return new simpleContinuousRateCurve.fn.init();
+var rateCurve = (function (){
+
+    var rateCurve = function (options){
+        return rateCurve.fn.init(options);
     };
+    
+    rateCurne.fn = {
 
-    simpleContinuousRateCurve.fn = {
-
-        init: function (){
-            if(arguments.length==1){
-
-            }
-            if(arguments.length==2){
-
-            }
-
+        discountFactor : function(date){
+            return 0.3;
         },
 
-        discountFactor: function (d){
-            var time = this.dayCounter().yearFraction(valueDate(),d);
-            return Math.exp(-1*r*t);
-        },
-        valueDate: function(){
-        },
-        calendar : function{
-        },
-        dayCounter: function(){
-        }
     };
+    rateCurve.fn.init.prototype = rateCurve.fn;
 
-    simpleContinuousRateCurve.fn.init.prototype = simpleContinuousRateCurve.fn;
-
-}());
+});

@@ -6,6 +6,7 @@ describe('cashflow', function (){
         expect(cf.value()).not.toBe(null);
     });
 
+ 
     it('cashflow behaviour 2', function (){
         expect(true).toBe(true);
     });

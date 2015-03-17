@@ -1,5 +1,5 @@
 (function () {
-            var WesterEstearMondays = [
+    var WesterEstearMondays = [
                   98,  90, 103,  95, 114, 106,  91, 111, 102,   // 1901-1909
              87, 107,  99,  83, 103,  95, 115,  99,  91, 111,   // 1910-1919
              96,  87, 107,  92, 112, 103,  95, 108, 100,  91,   // 1920-1929
@@ -65,7 +65,13 @@
             116, 108, 128, 119, 104, 124, 116, 100, 120, 112    // 2190-2199
             ];
 
-    function estearMonday(year){
+    var easterMonday = function estearMonday(year, calendarType){
+        if(calendarType === 'orthodox'){
+            return OrthodoxEstearMonday[year-1901];
+        }
+        else {
+            return WesterEstearMondays[year-1901];
+        }
     };
 
     function isWeekend(date){
@@ -78,6 +84,7 @@
     };
 
     var calendars = {
+
     _default: {
         isHoliday: isHoliday,
         isBusinessDay: function isBusinessDay(date){
@@ -88,7 +95,7 @@
     TARGET:{
         isHoliday:isHoliday,
         isBusinessDay: function (date){
-                        var d = date.dayOfMonth(), dd = date.getFullYeardayOfYear();
+                        var d = date.dayOfMonth(), dd = date.dayOfYear();
                         var  m = date.month();
                         var  y = date.year();
                         var  em = easterMonday(y);
@@ -114,10 +121,8 @@
             name: 'TARGET'
     },
     };
-    phi.calendars = calendars;
 
-    // Juste un truc a se rappeler: la raison pour laquelle quantlib fait une distinction 
-    // entre les calendriers orthodox et les calendriers occidentaux est la determination des
-    // easter monday
+    phi.calendars = calendars;
+    phi.easterMonday = easterMonday;
 
 }());

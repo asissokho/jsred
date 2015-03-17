@@ -2,17 +2,12 @@
 
 (function (){
 
-
     var getFirstOrDefault = {},
         discountingMethods = {},
         daycounters = {},
         extend = {},
         sum = {},
 
-        _defaults = {
-            discountingMethod: "fixedThenCompounded",
-            frequency: "annual"
-        },
         _frequencies = {
             annual: 1,
             quaterly: 4, 
@@ -27,7 +22,6 @@
         }
 
         this.val = function () { return options.val; };
-        //this.daycounter = getFirstOrDefault(options.dayc);??
         this.periodicity = getFirstOrDefault(options.periodicity);
         this.discount = function discount() {
             var time,
