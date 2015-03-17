@@ -1,7 +1,7 @@
 ﻿(function (global) {
     "use strict";
 
-   var  phi = function phi(fn) {
+    var  phi = function phi(fn) {
         return new phi.fn.init(fn);
     };
 
@@ -26,6 +26,18 @@
             }
         },
 
+        filter : function (arrayLike){
+            var i=0,
+                n=arrayLike.length,
+                filteredArray = [];
+            for(;i<n;i++){
+                if(filter(arrayLike[i])){
+                    filteredArray[i] = arrayLike[i];
+                }
+            }
+            return filteredArray;
+        },
+
         map: function (arrayLike, f) {
             var i=0,
                 n=arrayLike.length,
@@ -33,6 +45,7 @@
             for(;i<n;i++){
                 mappedArray[i] = f(arrayLike[i]);
             }
+            return mappedArray;
         },
 
         plus: function (x, y){
@@ -43,12 +56,12 @@
             return x*y;
         },
 
-        sum: function (arrayLike, f) {
+        sum: function (arrayLike) {
             var i=0,
                 s=0,
                 n=arrayLike.length;
             for(;i<n;i++){
-                s+=f(arrayLike[i]);
+                s+=arrayLike[i];
             }
             return s;
         },
@@ -87,6 +100,17 @@
         constructor: phi
     };
 
+    Array.prototype.sum = function(){
+        var self = this,
+            i = 0,
+            s = 0,
+            n = self.length;
+        for(; i< n; i++){
+            s+= 10*self[i];
+        }
+        return s / 10;
+    };
+ 
     phi.fn.prototype = phi.fn;
 
     phi.fn.extend(phi, phi.fn);

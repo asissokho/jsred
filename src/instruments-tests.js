@@ -26,14 +26,14 @@ describe("mapping at reducing functions", function (){
     };
 
     it("1 + 2 + 3 = 6", function(){
-        var res = phi.sum([1,2,3], phi.identity),
+        var res = [1, 2, 3].sum(); 
             expected = 6;
         console.log(res);
         expect(res).toBe(expected);
     });
 
     it("1*3 + 2*3 + 3*3 = 6", function(){
-        var res = phi.sum([1,2,3], times3),
+        var res = [1,2,3].map(times3).sum();
             expected = 18;
         expect(res).toBe(expected);
     });
