@@ -1,6 +1,6 @@
 "use strict";
 
-(function (){
+var rate = (function (){
 
     var    _frequencies = {
             annual: 1,
@@ -19,7 +19,7 @@
                 return Math.pow(1 + rate/frequency, frequency * time);
             },
             'continuous': function (rate, time){
-                return  Math.exp(rate*t);
+                return  Math.exp(rate*time);
             },
 
             'simpleThenCompounded': function(rate, time, frequency){
@@ -30,10 +30,10 @@
                     return Math.pow(1 + rate/frequency, frequency * time);
                 }
             }
-        };
+        },
 
-    function rate(options) {
-
+    _rate = function rate(_options) {
+        var options = _options || {};
         if (!(this instanceof rate) ) {
             return new rate(options);
         }
@@ -41,17 +41,22 @@
         this.val = options.val || 0; 
         this.periodicity = options.frequency || 'annual';
         this.compounding = options.compounding || 'simpleThenCompounded';
-    }
+    };
 
-    rate.prototype.discount = function (){
+    _rate.prototype.discount = function (){
         var time,
             date;
-        if (arguments.length == 1) {
+        if (arguments.length === 1) {
             time = arguments[0];
         } else {
             time = this.daycounter(arguments[0], arguments[1]);
         }
-        return 1 / _compoundingMethods[this.compoundingMethod](this.val, time, _frequencies[this.periodicity]);
+
+        console.log(_compoundingMethods);
+        return 1 / _compoundingMethods[this.compounding](this.val, time, _frequencies[this.periodicity]);
     }
 
+    return _rate;
 })();
+
+module.exports = rate;
