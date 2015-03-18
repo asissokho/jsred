@@ -1,13 +1,13 @@
 (function(global){
 
-    var _hasOccured = function (settlementDate){
+    var _willBeReceived = function (settlementDate){
         return function (cashflow){
-            if(!cashflow['hasOccured']){
+            if(!cashflow['hasOccured' ] ){
                 var exCouponDays = cashflow.exCouponDays || 0,
                     referenceDate = defaultCalendar.add( settlementDate, -1*exCouponDays);
                 return settlementDate < referenceDate;
             }
-            return cashflows.hasOccured(settlementDate);
+            return !cashflows.hasOccured(settlementDate);
         };
     },
 
@@ -47,9 +47,9 @@
         return accruedAmount;
     };
 
-    cashflows.prototype.npv = function (lisOfCashflows, yiedCurve, settlementDate, evaluationDate){
-         return listOfCashflows.filter(_hasOccured(yieldCurve, settlementDate))
-                .map(_discount(settlementDate, evaluationDate)).sum();
+    cashflows.prototype.npv = function (lisOfCashflows, yieldCurve, settlementDate, evaluationDate){
+         return listOfCashflows.filter(_willBeReceived(settlementDate))
+                .map(_discount(yieldCurve, settlementDate)).sum();
     };
 
 
