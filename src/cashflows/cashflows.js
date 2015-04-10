@@ -71,10 +71,8 @@
 
     };
 
-    global.phi= global.phi || {};
-
-    global.phi.cashflows = cashflows;
-
-    console.log(global.phi);
+    phi.cashflows = cashflows;
+    log('logging global.phi'); 
+    console.log(phi);
 
 }(this));

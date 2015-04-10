@@ -1,7 +1,4 @@
-﻿    "use strict";
-    var times = (function () {
-
-        /* Definition of the module and its dependencies 
+﻿        /* Definition of the module and its dependencies 
         app.define('times', app, global);
         app.use('times.dateAdjustmentMethods', app, global);
         app.use('times.dayCounters', app, global);
@@ -68,19 +65,14 @@
             }
         };
 
-        var Schedule = function Schedule() {
-
-        };
 
         return {
             yearFraction: yearFraction,
             advance: advance,
             dayCount: dayCount,
-            Schedule: Schedule
         };
 
 
-    })();
 
 
 

@@ -1,5 +1,4 @@
-﻿(function (global) {
-    "use strict";
+﻿    "use strict";
 
     var  phi = function phi(fn) {
         return new phi.fn.init(fn);
@@ -115,6 +114,6 @@
 
     phi.fn.extend(phi, phi.fn);
 
-    global.phi = phi;
-} (this));
+
+    module.exports = phi;
 

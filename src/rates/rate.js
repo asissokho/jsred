@@ -59,4 +59,4 @@ var rate = (function (){
     return _rate;
 })();
 
-module.exports = rate;
+//module.exports = rate;

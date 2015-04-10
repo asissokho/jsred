@@ -1,5 +1,24 @@
-(function () {
-    var WesterEstearMondays = [
+var January = Jan =0,
+	February = Feb = 1,
+	March = Mar =  2,
+	April = Apr = 3,
+	May = 4,
+	June = Jun = 5,
+	July = Jul = 6,
+	August = Aug = 7,
+	September = Sep = 8,
+	October = Oct = 9,
+	November = Nov = 10,
+	December = Dec = 11,
+    dayLengthInMilliseconds = 86400000;
+
+
+Date.prototype.dayOfYear = function (){
+     var januaryFirst = new Date(this.getFullYear(), January, 1);
+     return Math.ceil((this - januaryFirst)/dayLengthInMilliseconds) + 1;
+ };
+
+var WesterEstearMondays = [
                   98,  90, 103,  95, 114, 106,  91, 111, 102,   // 1901-1909
              87, 107,  99,  83, 103,  95, 115,  99,  91, 111,   // 1910-1919
              96,  87, 107,  92, 112, 103,  95, 108, 100,  91,   // 1920-1929
@@ -92,12 +111,12 @@
         },
         name : '_default'
     },
-    TARGET:{
+    target:{
         isHoliday:isHoliday,
         isBusinessDay: function (date){
-                        var d = date.dayOfMonth(), dd = date.dayOfYear();
-                        var  m = date.month();
-                        var  y = date.year();
+                        var d = date.getDate(), dd = date.dayOfYear();
+                        var  m = date.getMonth();
+                        var  y = date.getFullYear();
                         var  em = easterMonday(y);
                         if (isWeekend(date)
                             // New Year's Day
@@ -122,7 +141,6 @@
     },
     };
 
-    phi.calendars = calendars;
-    phi.easterMonday = easterMonday;
+module.exports = calendars;
 
-}());
+

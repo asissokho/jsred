@@ -1,5 +1,3 @@
-(function (){
-
 	var January = Jan =0,
 		February = Feb = 1,
 		March = Mar =  2,
@@ -14,4 +12,3 @@
 		December = Dec = 11;
 
 
-}());
