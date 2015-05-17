@@ -1,5 +1,4 @@
 "use strict";
-
 var rate = (function (){
 
     var    _frequencies = {
@@ -52,11 +51,10 @@ var rate = (function (){
             time = this.daycounter(arguments[0], arguments[1]);
         }
 
-        console.log(_compoundingMethods);
         return 1 / _compoundingMethods[this.compounding](this.val, time, _frequencies[this.periodicity]);
     }
 
     return _rate;
 })();
 
-//module.exports = rate;
+module.exports = rate;

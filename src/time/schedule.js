@@ -1,6 +1,9 @@
 var tr = require('./timeroutines'),
+    extend = require('../core.js').extend,
     advance = tr.dateArithmetics.advance,
+    areSameDate = tr.dateArithmetics.areSameDate,
     adjust = tr.adjust,
+    twentieth = tr.twentieth,
     Period = tr.Period,
     calendars = require('./calendars');
 
@@ -15,19 +18,6 @@ function evaluationDate(){
     return new Date();
 }
 
-function nextTwentieth(d, rule) {
-    var result = new Date(20, d.month(), d.year());
-    if (result < d)
-        result += 1 * Months;
-    if (rule == 'TwentiethIMM' || rule == 'OldCDS' || rule == 'CDS') {
-        var m = result.month() + 1;
-        if (m % 3 != 0) { // not a main IMM nmonth
-            var skip = 3 - m % 3;
-            result += skip * Months;
-        }
-    }
-    return result;
-}
 // see : https://github.com/lballabio/quantlib/blob/master/QuantLib/ql/time/dategenerationrule.hpp
 // explanation of different methods are given here
 function generateSchedule(direction, tenor, calendar, start, end, afterStart, beforeEnd, convention,  endOfMonth){
@@ -49,13 +39,13 @@ function generateSchedule(direction, tenor, calendar, start, end, afterStart, be
         insertMethod.apply(isRegular, temp != afterStart);
     }
 
-    temp = adjust(advance(seed,  Period(tenorLength, _tenor.unit)),'_default', convention, endOfMonth);
+    temp = adjust(advance(seed,  Period(tenorLength, _tenor.unit)), convention, '_default');
     lastInsertedDate = seed;
 
      while(comparisionSign * (temp - exitDate) < 0) {   
          // skip dates that would result in duplicates
          // after adjustment
-        if (adjust(lastInsertedDate, calendar, convention) != adjust(temp, calendar, convention)) {
+        if (adjust(lastInsertedDate, convention, calendar) != adjust(temp, convention, calendar)) {
             insertMethod.call(dates, temp);
             lastInsertedDate = temp;
             insertMethod.call(isRegular, true);
@@ -70,30 +60,67 @@ function generateSchedule(direction, tenor, calendar, start, end, afterStart, be
         insertMethod.call(isRegular, false);
     } 
 
-    if (adjust(lastInsertedDate, calendar, convention) != adjust(end, calendar, convention)) {
+    if (adjust(lastInsertedDate, convention, calendar) != adjust(end, convention, calendar)) {
         insertMethod.call(dates, temp);
         insertMethod.call(isRegular, false);
     }
 
     for(var i = 1; i < dates.length;i++){
+        dates[i] = adjust(dates[i], convention, calendar);
+    }
+
+    console.log(dates.length);
+    console.log(isRegular);
+    console.log(isRegular.length);
+
+    return dates;
+    
+}
+
+// firstDate, endOFMonth, and nextToLastDate are incompatible with it 
+function generateScheduleCDS(effectiveDate, terminationDate, tenor, calendar, convention){
+    var dates = [],
+        isRegular = [],
+        _tenor = typeof tenor == 'string'? new Period(tenor) : tenor,
+        insertMethod = Array.prototype.push,
+        comparisionSign = 1,
+        exitDate = beforeEnd? beforeEnd: end,
+        temp, lastInsertedDate, tenorLength = comparisionSign *  _tenor.length, seed;
+
+    seed =  twentieth(effectiveDate, 'previous', 'IMM');
+    insertMethod.call(dates, seed);
+   
+    var next20th = twentieth(effectiveDate, 'next', 'IMM'); 
+    
+    if(!areSameDate(next20th, effectiveDate)){
+        lastInsertedDate = next20th;
+        insertMethod.call(dates, next20th);
+        insertMethod.call(isRegular, false);
+    }
+
+    temp = adjust(advance(seed,  Period(tenorLength, _tenor.unit)),'_default', convention);
+
+     while(comparisionSign * (temp - exitDate) < 0) {   
+         // skip dates that would result in duplicates
+         // after adjustment
+        if (adjust(lastInsertedDate, calendar, convention) != adjust(temp, calendar, convention)) {
+            insertMethod.call(dates, temp);
+            lastInsertedDate = temp;
+            insertMethod.call(isRegular, true);
+        }
+        tenorLength = tenorLength + comparisionSign * _tenor.length;
+        temp = advance(seed, Period(tenorLength, _tenor.unit), convention, endOfMonth);
+    }
+        
+    if (adjust(lastInsertedDate, calendar, convention) != adjust(end, calendar, convention)) {
+        insertMethod.call(dates, temp);
+        insertMethod.call(isRegular, false);
+    }
+
+    for(var i = 0; i < dates.length;i++){
         dates[i] = adjust(dates[i], calendar, convention);
     }
 
-}
-
-
-function previousTwentieth(d, rule) {
-    var result = new Date(20, d.month(), d.year());
-    if (result > d)
-        result -= 1 * Months;
-    if (rule == 'TwentiethIMM' || rule == 'OldCDS' || rule == 'CDS') { 
-        var m = result.month();
-        if (m % 3 != 0) { // not a main IMM nmonth
-            var skip = m % 3;
-            result -= skip * Months;
-        }
-    }
-    return result;
 }
 
 
@@ -183,7 +210,7 @@ function Schedule(rule_, effectiveDate, terminationDate, tenor_, calendar_, conv
                         " date generation rule");
             default:
                 QL_FAIL("unknown rule (" + Integer(rule) + ")");
-        }
+        iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii}
     }
 
 
@@ -397,6 +424,29 @@ function Schedule(rule_, effectiveDate, terminationDate, tenor_, calendar_, conv
 }
 */
 
+var Schedule = function Schedule(effectiveDate, terminationDate, tenor, options){
+    if(!(this instanceof Schedule))
+        return new Schedule(effectiveDate, terminationDate, tenor, options);
+    extend(options, Schedule.defaults);
+    switch(options.rule){
+        case 'backward':
+            this.dates = generateSchedule(options.rule, tenor, options.calendar, terminationDate, effectiveDate, null, null, options.convention, options.endOfMonth);
+            break;
+        default :
+            this.dates= [];
+    }
+
+
+}
+
+Schedule.defaults = {
+    endOfMonth : false,
+    rule : 'backward',
+    convention : 'unajusted',
+    terminationConvention : 'unadjusted',
+    calendar : '_default'
+}
+
 var effectiveDate = new Date(),
     terminationDate = new Date(2019, 01, 01),
     tenor = '3M',
@@ -408,6 +458,7 @@ var effectiveDate = new Date(),
     nextToLast = null,
     convention = 'modifiedfollowing';
 
+
 var sch = generateSchedule(rule,
                      tenor,
                      cal,
@@ -417,5 +468,5 @@ var sch = generateSchedule(rule,
                      nextToLast,
                      convention,
                      false);
-module.exports = sch; 
+module.exports = Schedule; 
 // Very important lesson : firstDate is incompatible with IMM, Twentieth, CDS and OldCDS...

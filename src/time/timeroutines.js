@@ -1,8 +1,9 @@
 ﻿var calendars = require('./calendars'),
-    _default = require('../core').getFirstOrDefault;
+    _default = require('../core').getFirstOrDefault,
+    monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+    leapYearMonthLenghts = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
     
-
-
 var following = function modifiedFollowing(date, calendar) {
     calendar = getFirstOrDefault(calendars, calendar);
     while (calendar.isHoliday(date)) {
@@ -10,6 +11,32 @@ var following = function modifiedFollowing(date, calendar) {
       }
       return date;
   },
+
+  lastDayOfMonth = function lastDayOfMonth (year, month){
+      return year % 4 == 0? leapYearMonthLenghts[month] : monthLengths[month]; 
+  },
+
+  twentieth = function(date, direction , rule) {
+    if(date){
+        direction = direction? direction.toLowerCase() : 'next';
+        rule = rule? rule.toLowerCase() : 'twientieth';
+        var result = new Date(date.getFullYear(), date.getMonth(), 20),
+        sign = direction == 'previous'? '-' : '+';
+
+        if(!(date<result && sign == '+' || date>result && sign == '-')){
+            result = advance(result, sign + '1M');
+        }
+        var m = result.getMonth() + 1;
+
+        if(rule === 'imm' && m%3 != 0){
+            var skip =  sign == '-'? m % 3 : 3- m % 3;
+            result =  advance(result, sign + skip + 'M'); 
+        }
+        return result;
+
+    }
+  },
+
 
   Period = function Period(){
       if(!(this instanceof Period)){
@@ -84,6 +111,12 @@ var following = function modifiedFollowing(date, calendar) {
                 break;
             case "m":
                 month = month + qty;
+                var res = new Date( year, month, day); 
+                if(res.getDate() != day){
+                    month;
+                    day = lastDayOfMonth(res.getFullYear(), res.getMonth()-1);
+                }
+
                 break;
             case "y":
                 year = year + qty;
@@ -93,6 +126,7 @@ var following = function modifiedFollowing(date, calendar) {
         }
         return new Date(year, month, day);
     },
+
     areSameDate = function areSameDate(dateA, dateB) {
         return (dateA.getDate() == dateB.getDate() && 
                 dateA.getFullYear() == dateB.getFullYear() && dateA.getMonth() == dateB.getMonth());
@@ -110,6 +144,9 @@ var following = function modifiedFollowing(date, calendar) {
         modifiedpreceeding: modifiedPreceeding,
         _default: unadjusted
         },
+        
+        twentieth : twentieth,
+
         dateArithmetics: {
             advance: advance,
             areSameDate: areSameDate
@@ -117,10 +154,14 @@ var following = function modifiedFollowing(date, calendar) {
         'Period' : Period
     };
     
-    timeroutines.adjust = function (date, calendar, convention){
+    timeroutines.adjust = function (date, convention, calendar, period ){
         if(date){
             _calendar = _default(calendars, calendar);
             _adjustMehod = _default(timeroutines.dateAdjustmentMethods, convention.toLowerCase());
+            if(period){
+                console.log('nice period : '+ period);
+                date = advance(date, period);
+            }
             return _adjustMehod(date, _calendar);
         }    
     }
